@@ -13,5 +13,5 @@ export default {
   dbName: "blog",
   password: "vkmv7254",
   type: "postgresql",
-  debug: __prod__,
+  debug: !__prod__,
 } as Parameters<typeof MikroORM.init>[0];
