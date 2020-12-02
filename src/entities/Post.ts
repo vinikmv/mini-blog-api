@@ -7,7 +7,9 @@ import {
   Column,
   BaseEntity,
   ManyToOne,
+  OneToMany,
 } from "typeorm";
+import { Reaction } from "./Reaction";
 import { User } from "./User";
 
 @ObjectType()
@@ -33,8 +35,12 @@ export class Post extends BaseEntity {
   @Column()
   authorId: number;
 
+  @Field()
   @ManyToOne(() => User, user => user.posts)
   author: User;
+
+  @OneToMany(() => Reaction, reaction => reaction.post)
+  reactions: Reaction[];
 
   @Field(() => String)
   @CreateDateColumn()
