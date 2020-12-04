@@ -18,6 +18,8 @@ export class Reaction extends BaseEntity {
   @PrimaryColumn()
   postId: number;
 
-  @ManyToOne(() => Post, post => post.reactions)
+  @ManyToOne(() => Post, post => post.reactions, {
+    onDelete: "CASCADE",
+  })
   post: Post;
 }
