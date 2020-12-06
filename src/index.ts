@@ -16,6 +16,8 @@ import { Post } from "./entities/Post";
 import { User } from "./entities/User";
 import path from "path";
 import { Reaction } from "./entities/Reaction";
+import { createUserLoader } from "./utils/createUserLoader";
+import { createReactionLoader } from "./utils/createReactionLoader";
 
 const main = async () => {
   const conn = await createConnection({
@@ -64,7 +66,13 @@ const main = async () => {
       resolvers: [HelloResolver, PostResolver, UserResolver],
       validate: false,
     }),
-    context: ({ req, res }): MyContext => ({ req, res, redis }),
+    context: ({ req, res }): MyContext => ({
+      req,
+      res,
+      redis,
+      userLoader: createUserLoader(),
+      reactionLoader: createReactionLoader(),
+    }),
   });
 
   apolloServer.applyMiddleware({ app, cors: false });
