@@ -1,23 +1,24 @@
-import { getConnection } from "typeorm";
+import argon2 from "argon2";
+import "dotenv-safe";
 import {
-  Resolver,
-  Mutation,
-  Field,
-  Ctx,
   Arg,
+  Ctx,
+  Field,
+  FieldResolver,
+  Mutation,
   ObjectType,
   Query,
-  FieldResolver,
+  Resolver,
   Root,
 } from "type-graphql";
+import { getConnection } from "typeorm";
+import { v4 } from "uuid";
+import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from "../constants";
 import { User } from "../entities/User";
 import { MyContext } from "../types";
-import argon2 from "argon2";
-import { COOKIE_NAME, FORGET_PASSWORD_PREFIX } from "../constants";
-import { UsernamePasswordInput } from "../utils/UsernamePasswordInput";
-import { validateRegister } from "../utils/validateRegister";
 import { sendEmail } from "../utils/sendEmail";
-import { v4 } from "uuid";
+import { validateRegister } from "../utils/validateRegister";
+import { UsernamePasswordInput } from "./UsernamePasswordInput";
 
 @ObjectType()
 class FieldError {
@@ -124,7 +125,7 @@ export class UserResolver {
 
     await sendEmail(
       email,
-      `<a href="http://localhost:3000/change-password/${token}">Reset Password</a>`
+      `<a href="${process.env.CORS_ORIGIN}/change-password/${token}">Reset Password</a>`
     );
     return true;
   }

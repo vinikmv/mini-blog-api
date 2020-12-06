@@ -1,23 +1,23 @@
 import {
-  Resolver,
-  Query,
   Arg,
-  Mutation,
-  InputType,
-  Field,
   Ctx,
-  UseMiddleware,
-  Int,
+  Field,
   FieldResolver,
-  Root,
+  InputType,
+  Int,
+  Mutation,
   ObjectType,
+  Query,
+  Resolver,
+  Root,
+  UseMiddleware,
 } from "type-graphql";
-import { isAuth } from "../middleware/isAuth";
-import { Post } from "../entities/Post";
-import { MyContext } from "../types";
 import { getConnection } from "typeorm";
+import { Post } from "../entities/Post";
 import { Reaction } from "../entities/Reaction";
 import { User } from "../entities/User";
+import { isAuth } from "../middleware/isAuth";
+import { MyContext } from "../types";
 
 @InputType()
 class PostInput {
