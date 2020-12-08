@@ -30,7 +30,7 @@ const main = async () => {
     entities: [Post, User, Reaction],
   });
 
-  // await conn.runMigrations();
+  await conn.runMigrations();
 
   // await Post.delete({});
 
@@ -54,7 +54,7 @@ const main = async () => {
         httpOnly: true,
         sameSite: "lax",
         secure: __prod__,
-        // domain:__prod__ ? customdomain : null
+        domain: __prod__ ? ".viniciuskmv.codes" : undefined,
       },
       saveUninitialized: false,
       secret: process.env.SESSION_SECRET,
